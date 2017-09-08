@@ -1,27 +1,40 @@
 # Docker Swarm Presentation
 
-## Presentation
-[Slides](http://www.slideshare.net/albertogviana/docker-swarm-71804647)
+## Prerequisites 
+Install virtualbox on your host
 
-
-## Building a docker swarm cluster
+### Get docker machine 
+#### Windows 
+```
+if [[ ! -d "$HOME/bin" ]]; then mkdir -p "$HOME/bin"; fi && \
+curl -L https://github.com/docker/machine/releases/download/v0.12.2/docker-machine-Windows-x86_64.exe > "$HOME/bin/docker-machine.exe" && \
+chmod +x "$HOME/bin/docker-machine.exe"
+```
+#### 
+```
+curl -L https://github.com/docker/machine/releases/download/v0.12.2/docker-machine-`uname -s`-`uname -m` >/tmp/docker-machine &&
+chmod +x /tmp/docker-machine &&
+sudo cp /tmp/docker-machine /usr/local/bin/docker-machine
+```
+## Building a docker swarm cluster 
 ```
 for i in 1 2 3; do
     docker-machine create -d virtualbox swarm-$i
 done
 ```
 
-Checking my machines
+## Verify that your machines are up and running 
 ```
 docker-machine ls
 ```
 
 The output is
 ```
-NAME      ACTIVE   DRIVER       STATE     URL                         SWARM   DOCKER    ERRORS
-swarm-1   -        virtualbox   Running   tcp://192.168.99.100:2376           v1.13.0
-swarm-2   -        virtualbox   Running   tcp://192.168.99.101:2376           v1.13.0
-swarm-3   -        virtualbox   Running   tcp://192.168.99.102:2376           v1.13.0
+$ docker-machine.exe ls
+NAME      ACTIVE   DRIVER       STATE     URL                         SWARM   DOCKER        ERRORS
+swarm-1   -        virtualbox   Running   tcp://192.168.99.102:2376           v17.06.2-ce
+swarm-2   -        virtualbox   Running   tcp://192.168.99.100:2376           Unknown       Unable to query docker version: Get https://192.168.99.100:2376/v1.15/version: x509: certificate is valid for 192.168.99.101, not 192.168.99.100
+swarm-3   -        virtualbox   Running   tcp://192.168.99.101:2376           Unknown       Unable to query docker version: Get https://192.168.99.101:2376/v1.15/version: x509: certificate is valid for 192.168.99.102, not 192.168.99.101
 ```
 
 Creating the cluster
