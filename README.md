@@ -44,6 +44,11 @@ eval "$(docker-machine env swarm-1)"
 docker swarm init --advertise-addr $(docker-machine ip swarm-1)
 ```
 
+##Connect to your docker machines through ssh 
+```
+docker-machine ssh swarm-1
+```
+
 ## Adding the visualizer service
 ```
 eval "$(docker-machine env swarm-1)"
