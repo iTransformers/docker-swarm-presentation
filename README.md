@@ -28,13 +28,13 @@ done
 docker-machine ls
 ```
 
-The output is
+The output should be something similar to
 ```
-$ docker-machine.exe ls
+$ ./docker-machine.exe ls
 NAME      ACTIVE   DRIVER       STATE     URL                         SWARM   DOCKER        ERRORS
 swarm-1   -        virtualbox   Running   tcp://192.168.99.102:2376           v17.06.2-ce
-swarm-2   -        virtualbox   Running   tcp://192.168.99.100:2376           Unknown       Unable to query docker version: Get https://192.168.99.100:2376/v1.15/version: x509: certificate is valid for 192.168.99.101, not 192.168.99.100
-swarm-3   -        virtualbox   Running   tcp://192.168.99.101:2376           Unknown       Unable to query docker version: Get https://192.168.99.101:2376/v1.15/version: x509: certificate is valid for 192.168.99.102, not 192.168.99.101
+swarm-2   -        virtualbox   Running   tcp://192.168.99.103:2376           v17.06.2-ce
+swarm-3   -        virtualbox   Running   tcp://192.168.99.104:2376           v17.06.2-ce
 ```
 
 Creating the cluster
@@ -53,8 +53,16 @@ docker service create \
   --constraint=node.role==manager \
   --mount=type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
   dockersamples/visualizer
+```
+Wait a bit and check the status of the visualizer service. Pulling dockersamples/visualizer:latest will speed things up!
 
-open http://$(docker-machine ip swarm-1):8000
+```
+docker service ls 
+```
+Once up open in your browser
+
+``` 
+echo http://$(docker-machine ip swarm-1):8000
 ```
 
 ## Adding workers to the cluster
